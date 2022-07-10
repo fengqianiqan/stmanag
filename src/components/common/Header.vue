@@ -19,7 +19,7 @@ export default {
 
 .header{
   .el-header{
-    background: darkseagreen;
+    background: #813c85;
     color: white;
     line-height: 60px;
     display: flex;//自动弹性伸缩，合适适配不同大小的屏幕

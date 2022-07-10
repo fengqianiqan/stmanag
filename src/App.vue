@@ -18,4 +18,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
 }
+/*表格不对齐问题*/
+body el-table th.gutter{
+  display: table-cell !important;
+}
 </style>
