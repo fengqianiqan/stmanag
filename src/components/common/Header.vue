@@ -2,7 +2,7 @@
   <div class="header">
     <el-header>
       <div class="title" >教务管理系统</div>
-      <div>fengqian</div>
+      <div>{{ name }}</div>
     </el-header>
 
   </div>
@@ -11,7 +11,15 @@
 
 <script>
 export default {
-  name: 'Header'
+  name: 'Header',
+  data () {
+    return {
+      name: ''
+    }
+  },
+  created () {
+    this.name = localStorage.getItem('username')
+  }
 }
 </script>
 
