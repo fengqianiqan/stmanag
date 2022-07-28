@@ -27,15 +27,16 @@
 
 <script>
 export default {
-  name: 'Mevue',
+  name: 'Menue',
   data () {
     return {
-      menus: []
+      menus: [],
+      activePath: ''
     }
   },
   created () {
     this.menus = [...this.$router.options.routes]
-    this.activePath= this.$router.currentRoute.path
+    this.activePath = this.$router.currentRoute.path
   },
   methods: {
   }
@@ -49,7 +50,7 @@ export default {
     .el-menu{
       height: 100%;
     }
-    .el.submenu .el-menu.item{
+    .el-submenu .el-menu-item{
       min-width: 0;
     }
   }

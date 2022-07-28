@@ -1,13 +1,12 @@
 <template>
+<div>
 
-  <div class="footer">
-  </div>
-
+</div>
 </template>
 
 <script>
 export default {
-  name: 'Footer',
+  name: 'MapData',
   data () {
     return {
 
@@ -16,6 +15,6 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 
 </style>

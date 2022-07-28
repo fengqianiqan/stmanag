@@ -54,9 +54,10 @@ export default {
   },
   methods: {
     login (ruleForm) {
-      // console.log(this.ruleForm)
+      console.log(this.$refs)
       this.$refs[ruleForm].validate((valid) => {
         if (valid) {
+          // this.$router.push('/home')
           this.axios.post('http://rap2api.taobao.org/app/mock/304740/login', this.form)
             .then(res => {
               if (res.data.status === 200) {

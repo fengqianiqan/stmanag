@@ -5,7 +5,7 @@
       <Menue></Menue>
       <el-main>
         <el-card>
-          <el-breadcrumb separator="/">
+          <el-breadcrumb separator-class="el-icon-arrow-right">
             <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
             <el-breadcrumb-item v-for="(item,index) in $route.matched" :key="index">{{item.name}}</el-breadcrumb-item>
           </el-breadcrumb>
@@ -40,7 +40,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .home{
   .content{
     position: absolute;

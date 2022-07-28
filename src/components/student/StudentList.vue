@@ -15,7 +15,7 @@
     </el-form-item>
   </el-form>
   <el-table
-    :data="tableData"
+    :data="tableData.slice((currentPage - 1) * pageSize, currentPage*pageSize)"
     border
     style="width: 100%">
     <el-table-column prop="name" label="姓名" align="center"  ></el-table-column>
@@ -33,6 +33,17 @@
       </template>
     </el-table-column>
   </el-table>
+  <!-- 分页-->
+  <el-pagination
+    background
+    @size-change="hanldSizeChange"
+    @current-change="hanldCurrentChange"
+    :current-page="currentPage"
+    :page-size="pageSize"
+    :page-sizes="[5,10,20,30]"
+    layout="total,sizes,prev, pager, next, jumper"
+    :total="total">
+  </el-pagination>
 <!--  新增信息嵌套表单-->
   <el-dialog :title="state ? '新增学生信息' : '修改学生信息'" :visible.sync="dialogFormVisible" width="400px">
     <el-form :model="form" :rules="rules" ref="form">
@@ -68,7 +79,7 @@
         <el-input v-model="form.adr" autocomplete="off" size="mini"></el-input>
       </el-form-item>
       <el-form-item label="联系方式" :label-width="formLabelWidth" prop="pho">
-        <el-input v-model="form.pho" autocomplete="off" size="mini"></el-input>
+        <el-input v-model.number="form.pho" autocomplete="off" size="mini"></el-input>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -108,44 +119,13 @@ export default {
         sta: [{required: true, message: '请选择状态'}],
         adr: [{required: true, message: '请输入地址'}],
         pho: [{required: true, message: '请输入联系方式'},
-          {type: 'number', message: '学号必须是数字'}]
+          {type: 'number', message: '联系方式必须是数字'}]
       },
+      // 分页数据
+      total: 100,
+      currentPage: 1,
+      pageSize: 10,
       tableData: [{
-        sex: '男',
-        name: '六儿',
-        num: 2020002371,
-        cla: '物联网1001',
-        sta: '已入学',
-        adr: '上海市普陀区金沙江路 1512 弄',
-        pho: 18190998767,
-        age: 19
-      }, {
-        sex: '女',
-        name: '小七',
-        num: 2020003472,
-        cla: '物联网1002',
-        sta: '已入学',
-        adr: '上海市普陀区金沙江路 1513 弄',
-        pho: 18100908767,
-        age: 19
-      }, {
-        sex: '男',
-        name: '渣渣灰',
-        num: 202000473,
-        cla: '物联网1003',
-        sta: '已入学',
-        adr: '上海市普陀区金沙江路 1514 弄',
-        pho: 18190908767,
-        age: 19
-      }, {
-        sex: '女',
-        name: '高高',
-        num: 2020004474,
-        cla: '物联网1004',
-        sta: '已入学',
-        adr: '上海市普陀区金沙江路 1515 弄',
-        pho: 18190938067,
-        age: 20
       }],
       formInline: {
         name: '',
@@ -153,14 +133,66 @@ export default {
       }
     }
   },
+  created () {
+    this.getCount()
+    this.getData()
+  },
   methods: {
+    // 分页函数
+    hanldSizeChange (val) {
+      this.pageSize = val
+      this.currentPage = 1
+      console.log(val)
+    },
+    hanldCurrentChange (val) {
+      this.currentPage = val
+      console.log(val)
+    },
+    getCount () {
+      this.service.get('/students/count')
+        .then(res => {
+          res.status === 200 ? this.total = res.data : this.total = 0
+          console.log(this.total)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getData () {
+      this.service.get('/students/count')
+      this.service.get('/students?limit' + this.total)
+        .then(res => {
+          if (res.status === 200) {
+            console.log(res)
+            this.tableData = [...res.data]
+          } else {
+            // ..
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     updateInfo (row) {
       console.log(row)
       this.state = false
       this.dialogFormVisible = true
-      this.form = row
+      this.form = {...row}
     },
     dele (row) {
+      this.service.delete('/students/' + row.id)
+        .then(res => {
+          if (res.status === 204) {
+            this.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            this.getData()
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
     },
     addStu () {
       this.state = true
@@ -173,16 +205,40 @@ export default {
       this.$refs[form].validate((valid) => {
         if (valid) {
           if (this.state) {
+            delete this.form.createdDate
+            delete this.form.lastModifiedDate
             // 调用新增信息接口
-            console.log(this.error)
-            this.tableData.push()
-            this.dialogFormVisible = false
-          } else {}
-          // 调用修改接口
-          this.tableData.add(this.form)
-          this.dialogFormVisible = false
+            this.service.post('/students', this.form)
+              .then(res => {
+                if (res.status === 201) {
+                  this.dialogFormVisible = false
+                  this.form = {}
+                  this.$message({
+                    message: '新增成功',
+                    type: 'success'
+                  })
+                  this.getData()
+                }
+              })
+              .catch(err => {
+                console.error(err)
+              })
+          } else {
+            // 调用修改接口
+            this.service.patch('/students/' + this.form.id, this.form)
+              .then(res => {
+                this.dialogFormVisible = false
+                this.form = {}
+                this.getData()
+              })
+              .catch(err => {
+                console.error(err)
+              })
+          }
+          /* this.tableData.add(this.form)
+          this.dialogFormVisible = false */
         } else {
-          console.log(this.error)
+          console.error(this.form)
         }
       })
     }
@@ -197,6 +253,10 @@ export default {
   }
   .el-select{
     width: 100%;
+  }
+  .el-pagination{
+    text-align: right;
+    margin-top: 20px;
   }
 }
 </style>

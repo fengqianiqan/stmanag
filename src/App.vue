@@ -17,9 +17,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  color: #2c3e50;
 }
 /*表格不对齐问题*/
-body el-table th.gutter{
+body .el-table th.gutter{
   display: table-cell !important;
 }
 </style>

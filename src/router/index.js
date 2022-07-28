@@ -17,8 +17,15 @@ export default new Router({
       component: () => import('@/components/Login')
     },
     {
+      path: '*',
+      name: 'Notfound',
+      hidden: true,
+      component: () => import('@/components/Notfound')
+    },
+    {
       path: '/home',
       name: '学生管理',
+      iConCla: 'fa fa-users',
       redirect: 'home/student',
       component: () => import('@/components/Home'),
       children: [
@@ -43,10 +50,24 @@ export default new Router({
       ]
     },
     {
-      path: '*',
-      name: 'Notfound',
-      hidden: true,
-      component: () => import('@/components/Notfound')
+      path: '/home',
+      name: '数据分析',
+      iConCla: 'fa fa-bar-chart',
+      component: () => import('@/components/Home'),
+      children: [
+        {
+          path: '/home/dataview',
+          name: '数据概览',
+          iConCla: 'fa fa-line-chart',
+          component: () => import('@/components/dataAnalysis/DataOverView')
+        },
+        {
+          path: '/home/mapview',
+          name: '地图概览',
+          iConCla: 'fa fa-map-marker',
+          component: () => import('@/components/dataAnalysis/MapData')
+        }
+      ]
     }
   ],
   mode: 'history'

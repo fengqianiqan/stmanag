@@ -11,10 +11,15 @@ import 'font-awesome/css/font-awesome.min.css'
 
 import axios from 'axios'
 
+import service from './service'
+
+import echarts from 'echarts'
+
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 Vue.prototype.axios = axios // 挂载到原型，可在全局使用
-
+Vue.prototype.service = service
+Vue.prototype.$echarts = echarts
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
