@@ -247,6 +247,10 @@ export default {
               .then(res => {
                 this.dialogFormVisible = false
                 this.form = {}
+                this.$message({
+                  message: '修改成功',
+                  type: 'success'
+                })
                 this.getData()
               })
               .catch(err => {
