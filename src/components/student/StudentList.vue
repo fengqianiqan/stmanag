@@ -13,6 +13,9 @@
     <el-form-item>
       <el-button type="primary" @click="findStu" size="mini">查询</el-button>
     </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="reset" size="mini">重置</el-button>
+    </el-form-item>
   </el-form>
   <el-table
     :data="tableData.slice((currentPage - 1) * pageSize, currentPage*pageSize)"
@@ -124,7 +127,7 @@ export default {
       // 分页数据
       total: 100,
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 5,
       tableData: [{
       }],
       formInline: {
@@ -163,7 +166,7 @@ export default {
       this.service.get('/students?limit' + this.total)
         .then(res => {
           if (res.status === 200) {
-            console.log(res)
+            // console.log(res)
             this.tableData = [...res.data]
           } else {
             // ..
@@ -199,7 +202,22 @@ export default {
       this.dialogFormVisible = true
     },
     findStu () {
-      console.log(this.formInline)
+      // console.log(this.formInline)
+      this.service.get('/students', {
+        params: this.formInline
+      })
+        .then(res => {
+          // console.log(res)
+          if (res.status === 200) {
+            this.tableData = [...res.data]
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    reset () {
+      this.getData()
     },
     sure (form) {
       this.$refs[form].validate((valid) => {
