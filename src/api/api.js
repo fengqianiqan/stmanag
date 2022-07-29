@@ -26,3 +26,27 @@ export function getData (root, url, params) {
       console.log(err)
     })
 }
+export function changeInfo (root, method, url, msg, form, callback) {
+  let _url = ''
+  method === 'post' ? _url = url : _url = url + '/' + root.form.id
+  // 调用新增信息接口
+  if (method === 'patch') {
+    delete root.form.createdDate
+    delete root.form.lastModifiedDate
+  }
+  root.service[method](_url, root.form)
+    .then(res => {
+      if (res.status === 201 || res.status === 200) {
+        root.dialogFormVisible = false
+        root.form = {}
+        root.$message({
+          message: msg,
+          type: 'success'
+        })
+        callback(root, url)
+      }
+    })
+    .catch(err => {
+      console.error(err)
+    })
+}
