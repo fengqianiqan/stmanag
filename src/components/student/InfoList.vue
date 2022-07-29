@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { getData, changeInfo } from '../../api/api'
+import { getData, changeInfo, remove } from '../../api/api'
 import Page from '../common/Page'
 export default {
   name: 'infoList',
@@ -141,19 +141,7 @@ export default {
       this.form = {...row}
     },
     dele (row) {
-      this.service.delete('/students/' + row.id)
-        .then(res => {
-          if (res.status === 204) {
-            this.$message({
-              message: '删除成功',
-              type: 'success'
-            })
-            getData(this, '/students')
-          }
-        })
-        .catch(err => {
-          console.error(err)
-        })
+      remove(this, row, '/students')
     },
     addStu () {
       this.state = true

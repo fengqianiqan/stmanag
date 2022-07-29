@@ -50,3 +50,23 @@ export function changeInfo (root, method, url, msg, form, callback) {
       console.error(err)
     })
 }
+export function remove (root, row, url) {
+  root.$alert('你确定删除数据吗？', '提示', {
+    confirmButtonText: '确定',
+    callback: () => {
+      root.service.delete(url + '/' + row.id)
+        .then(res => {
+          if (res.status === 204) {
+            root.$message({
+              message: '删除成功',
+              type: 'success'
+            })
+            getData(root, url)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+        })
+    }
+  })
+}
