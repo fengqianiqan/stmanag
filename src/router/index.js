@@ -46,6 +46,12 @@ export default new Router({
           name: '信息列表',
           iConCla: 'fa fa-info-circle',
           component: () => import('@/components/student/InfoList')
+        },
+        {
+          path: '/home/attend',
+          name: '考勤管理',
+          iConCla: 'fa fa-info-circle',
+          component: () => import('@/components/student/attend')
         }
       ]
     },
