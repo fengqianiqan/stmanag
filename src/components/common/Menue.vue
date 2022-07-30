@@ -10,13 +10,15 @@
       active-text-color="#ffd04b"
     >
       <template v-for="(item,index) in menus">
-        <el-submenu index="index+''" :key="index" v-if="!item.hidden">
+        <el-submenu :index="index+''" :key="index" v-if="!item.hidden">
           <template slot="title">
-            <i class="fa fa-users" style="color: white"></i>
+            <i :class="item.iconClass"></i>
             <span>{{ item.name }}</span>
           </template>
           <el-menu-item-group v-for="(child,index) in item.children" :key="index">
-            <el-menu-item :index="child.path"><i :class="child.iConCla" style="color: white"></i> {{child.name}}</el-menu-item>
+            <el-menu-item :index="child.path">
+              <i :class="child.iconClass" ></i>
+              {{child.name}}</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
       </template>
@@ -37,8 +39,6 @@ export default {
   created () {
     this.menus = [...this.$router.options.routes]
     this.activePath = this.$router.currentRoute.path
-  },
-  methods: {
   }
 }
 </script>

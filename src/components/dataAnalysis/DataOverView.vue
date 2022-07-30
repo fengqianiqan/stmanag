@@ -1,46 +1,25 @@
 <template>
 <div class="data-view">
   <el-card>
-    <div id="'main1"></div>
+    <div id="main1"></div>
   </el-card>
   <el-card>
-    <div id="'main2"></div>
+    <div id="main2"></div>
   </el-card>
 </div>
 </template>
-
 <script>
 export default {
   name: 'DataOverView',
   data () {
     return {
-
     }
   },
   created () {
   },
-  methods: {
-    draw (arr1, arr2) {
-      var myChart = this.$echarts.init(document.getElementById('main1'))
-      myChart.setOption({
-        title: {
-          text: 'Vue框架实战班'
-        },
-        tooltip: {},
-        xAxis: {
-          data: arr1
-        },
-        yAxis: {},
-        series: [{
-          name: '人数',
-          type: 'bar',
-          data: arr2
-        }]
-      })
-    }
-  },
   mounted () {
     console.log(this.arr1)
+    // this.echarts()
     // 基于准备好的dom,初始化echarts实例
     var myChart = this.$echarts.init(document.getElementById('main1'))
     myChart.setOption({

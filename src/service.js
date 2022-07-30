@@ -21,7 +21,7 @@ service.interceptors.request.use(function (config) {
   return Promise.reject(error)
 })
 // 添加响应拦截器
-service.interceptors.request.use(function (response) {
+service.interceptors.response.use(function (response) {
   // 对响应数据做些什么
   return response
 }, function (error) {

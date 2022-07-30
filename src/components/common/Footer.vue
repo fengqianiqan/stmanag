@@ -1,6 +1,8 @@
 <template>
 
   <div class="footer">
+    <el-card>
+    </el-card>
   </div>
 
 </template>
@@ -10,7 +12,6 @@ export default {
   name: 'Footer',
   data () {
     return {
-
     }
   }
 }
