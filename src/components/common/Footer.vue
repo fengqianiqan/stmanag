@@ -1,10 +1,6 @@
 <template>
-
   <div class="footer">
-    <el-card>
-    </el-card>
   </div>
-
 </template>
 
 <script>
@@ -18,5 +14,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 </style>

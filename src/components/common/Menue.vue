@@ -7,8 +7,7 @@
       class="el-menu-vertical-demo"
       background-color="#1e131d"
       text-color="#fff"
-      active-text-color="#ffd04b"
-    >
+      active-text-color="#ffd04b">
       <template v-for="(item,index) in menus">
         <el-submenu :index="index+''" :key="index" v-if="!item.hidden">
           <template slot="title">

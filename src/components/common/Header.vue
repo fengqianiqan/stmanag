@@ -4,9 +4,7 @@
       <div class="title" >教务管理系统</div>
       <div>{{ name }}</div>
     </el-header>
-
   </div>
-
 </template>
 
 <script>
@@ -24,7 +22,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
 .header{
   .el-header{
     background: #813c85;
@@ -33,11 +30,9 @@ export default {
     display: flex;//自动弹性伸缩，合适适配不同大小的屏幕
     justify-content: space-between;//两端
     .title{
-      font-size: 24px;
       width: 200px;
+      font-size: 24px;
     }
   }
-
 }
-
 </style>
