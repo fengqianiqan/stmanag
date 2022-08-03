@@ -24,7 +24,7 @@ export default {
     var myChart = this.$echarts.init(document.getElementById('main1'))
     myChart.setOption({
       title: {
-        text: 'Vue框架实战班'
+        text: '班级'
       },
       tooltip: {},
       xAxis: {
@@ -41,7 +41,7 @@ export default {
     var myChart1 = this.$echarts.init(document.getElementById('main2'))
     let option = {
       title: {
-        text: '大佬进阶过程'
+        text: '数据'
       },
       tooltip: {
         trigger: 'axis'
