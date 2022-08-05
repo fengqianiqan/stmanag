@@ -179,7 +179,7 @@ export default {
   width: 100%;
   #main {
     width: 100%;
-    height: 600px;
+    height: 900px;
   }
 }
 </style>
