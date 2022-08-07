@@ -21,6 +21,17 @@ Vue.prototype.axios = axios // 挂载到原型，可在全局使用
 Vue.prototype.service = service
 Vue.prototype.$echarts = echarts
 /* eslint-disable no-new */
+// GOOD
+router.beforeEach((to, from, next) => {
+  let flag = localStorage.getItem('username')
+  if (!flag) {
+    if (to.path !== '/login') {
+      next('/login')
+    }
+  } else next()
+  // if (to.name !== 'Login' && !isAuthenticated) next({ name: 'Login' })
+  next()
+})
 new Vue({
   el: '#app',
   router,
